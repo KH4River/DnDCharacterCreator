@@ -1,0 +1,16 @@
+problems with Tool:
+1. have to pay for every little thing
+2. doesnt properly do statblocks for summons or subclass pets
+3. its not "spell concentration" friendly (there is literally no way to track concentration)
+4. you cant track AC changes that come from spells
+5. the search engine for anything is shit
+6. only works if u have internet / cant acces rulings in your own machine
+7. bad homewbrew adaptation
+8. can only have 6 characters at a time unless you pay for a subscription
+9. there is no support for vtt (there is a need to install a 3rd party program)
+
+good things with Tool:
+1. everything is one place so you only "need" one tab
+2. character sheet customization (background, colours, pfp, pfp border idk what else)
+3. can have multiple characters
+4. its new player friendly (there is no need to learn every ruling)
