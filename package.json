@@ -1,0 +1,48 @@
+{
+  "name": "dnd-character-creator",
+  "version": "0.0.0",
+  "private": true,
+  "main": "electron/app.ts",
+  "scripts": {
+    "ng": "ng",
+    "start:dev": "concurrently --kill-others \"ng serve\" \"electron .\"",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test"
+  },
+  "author": {
+    "name": "KH4River",
+    "email": "camposdavidmartinez@gmail.com"
+  },
+  "contributors": [
+    {
+      "name": "Shoonkey",
+      "email": "shoonkey.dev@gmail.com"
+    },
+    {
+      "name": "KH4River",
+      "email": "camposdavidmartinez@gmail.com"
+    }
+  ],
+  "packageManager": "npm@11.6.2",
+  "dependencies": {
+    "@angular/common": "^21.0.0",
+    "@angular/compiler": "^21.0.0",
+    "@angular/core": "^21.0.0",
+    "@angular/forms": "^21.0.0",
+    "@angular/platform-browser": "^21.0.0",
+    "@angular/router": "^21.0.0",
+    "concurrently": "^9.2.1",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@angular/build": "^21.0.4",
+    "@angular/cli": "^21.0.4",
+    "@angular/compiler-cli": "^21.0.0",
+    "electron": "^39.2.7",
+    "jsdom": "^27.1.0",
+    "typescript": "~5.9.2",
+    "vitest": "^4.0.8"
+  }
+}
