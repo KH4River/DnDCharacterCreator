@@ -1,0 +1,62 @@
+<div class="field">
+  <p>Leveling type</p>
+  <mat-button-toggle-group
+    aria-label="Leveling type"
+    [value]="rules().levelingType"
+    (change)="changeRules('levelingType', $event.value)"
+  >
+    <mat-button-toggle value="xp">XP</mat-button-toggle>
+    <mat-button-toggle value="milestone">Milestone</mat-button-toggle>
+  </mat-button-toggle-group>
+</div>
+
+<div class="field">
+  <p>HP type</p>
+  <mat-button-toggle-group
+    aria-label="HP type"
+    [value]="rules().hpType"
+    (change)="changeRules('hpType', $event.value)"
+  >
+    <mat-button-toggle value="average">Average</mat-button-toggle>
+    <mat-button-toggle value="rolled">Rolled</mat-button-toggle>
+  </mat-button-toggle-group>
+</div>
+
+<div class="field">
+  <p>Rules</p>
+  <mat-button-toggle-group
+    aria-label="Rules"
+    [value]="rules().ruleYear"
+    (change)="changeRules('ruleYear', $event.value)"
+  >
+    <mat-button-toggle value="2014">2014</mat-button-toggle>
+    <mat-button-toggle value="2024">2024</mat-button-toggle>
+  </mat-button-toggle-group>
+</div>
+
+<mat-slide-toggle
+  class="field"
+  [checked]="rules().ignoreCoinWeight"
+  (change)="changeRules('ignoreCoinWeight', $event.checked)"
+  >Ignore coin weight</mat-slide-toggle
+>
+<mat-slide-toggle
+  class="field"
+  [checked]="rules().obeyMulticlassRequirements"
+  (change)="changeRules('obeyMulticlassRequirements', $event.checked)"
+  >Obey multiclass requirements</mat-slide-toggle
+>
+
+<!-- Only if signed in -->
+<mat-form-field>
+  <mat-label>Character privacy</mat-label>
+  <mat-select
+    value="private"
+    [value]="rules().characterPrivacy"
+    (selectionChange)="changeRules('characterPrivacy', $event.value)"
+  >
+    <mat-option value="private">Private</mat-option>
+    <mat-option value="public">Public</mat-option>
+    <mat-option value="campaign-only">Campaign-only</mat-option>
+  </mat-select>
+</mat-form-field>

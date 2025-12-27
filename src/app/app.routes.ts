@@ -1,3 +1,15 @@
 import { Routes } from '@angular/router';
 
-export const routes: Routes = [];
+import { CharacterCreationPage } from './pages/character-creation-page/character-creation-page';
+
+export const routes: Routes = [
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'character-creator',
+  },
+  {
+    path: 'character-creator',
+    component: CharacterCreationPage,
+  },
+];
