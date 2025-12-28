@@ -1,10 +1,9 @@
 :host {
-  display: flex;
-  flex-direction: column;
-  padding: 1.5rem;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-height: 100dvh;
 }
 
-.title {
-  text-align: center;
-  font-size: 2rem;
+router-outlet {
+  display: none;
 }

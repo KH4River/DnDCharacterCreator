@@ -38,14 +38,17 @@
   class="field"
   [checked]="rules().ignoreCoinWeight"
   (change)="changeRules('ignoreCoinWeight', $event.checked)"
-  >Ignore coin weight</mat-slide-toggle
 >
+  Ignore coin weight
+</mat-slide-toggle>
+
 <mat-slide-toggle
   class="field"
   [checked]="rules().obeyMulticlassRequirements"
   (change)="changeRules('obeyMulticlassRequirements', $event.checked)"
-  >Obey multiclass requirements</mat-slide-toggle
 >
+  Obey multiclass requirements
+</mat-slide-toggle>
 
 <!-- Only if signed in -->
 <mat-form-field>

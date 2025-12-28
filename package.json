@@ -5,7 +5,8 @@
   "main": "electron/app.ts",
   "scripts": {
     "ng": "ng",
-    "start:dev": "concurrently --kill-others \"ng serve\" \"electron .\"",
+    "electron": "concurrently --kill-others \"ng serve\" \"electron .\"",
+    "serve": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"

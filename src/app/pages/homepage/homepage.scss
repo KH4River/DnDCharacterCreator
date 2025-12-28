@@ -1,0 +1,30 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  gap: 1.5rem;
+}
+
+.title {
+  font-size: 3rem;
+  letter-spacing: 1px;
+  line-height: 3rem;
+  color: transparent;
+  background: linear-gradient(
+    90deg,
+    rgba(113, 117, 245, 1) 0%,
+    rgba(60, 41, 145, 1) 51%,
+    rgba(99, 216, 255, 1) 100%
+  );
+  background-clip: text;
+}
+
+.description {
+  font-size: 1.25rem;
+  line-height: 1.5rem;
+}
+
+.action-list {
+  display: flex;
+  gap: 0.5rem;
+}
