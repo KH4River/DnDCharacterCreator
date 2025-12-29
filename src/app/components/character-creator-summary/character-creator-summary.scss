@@ -1,0 +1,11 @@
+:host {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.character-img {
+  max-width: 80px;
+  border-radius: 50%;
+}

@@ -1,0 +1,11 @@
+<img class="character-img" [src]="baseData().imgSrc" [alt]="baseData().imgAltText" />
+<div class="character-name">
+  <mat-form-field subscriptSizing="dynamic">
+    <mat-label>Your character name</mat-label>
+    <input
+      matInput
+      [value]="baseData().name"
+      (input)="updateCharacterName($event.target.value)"
+    />
+  </mat-form-field>
+</div>

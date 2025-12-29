@@ -16,5 +16,8 @@ export const routes: Routes = [
   {
     path: 'character/new',
     component: CharacterCreationPage,
+    children: [
+      
+    ]
   },
 ];

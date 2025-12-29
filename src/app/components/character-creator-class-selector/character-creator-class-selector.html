@@ -1,0 +1,24 @@
+<mat-form-field class="field" subscriptSizing="dynamic">
+  <mat-label>Class</mat-label>
+  <mat-select
+    value=""
+    [value]="characterClass()"
+    (selectionChange)="characterClass.set($event.value)"
+  >
+    <mat-option value="barbarian">Barbarian</mat-option>
+    <mat-option value="bard">Bard</mat-option>
+    <mat-option value="cleric">Cleric</mat-option>
+    <mat-option value="druid">Druid</mat-option>
+    <mat-option value="figther">Figther</mat-option>
+    <mat-option value="monk">Monk</mat-option>
+    <mat-option value="paladin">Paladin</mat-option>
+    <mat-option value="ranger">Ranger</mat-option>
+    <mat-option value="rogue">Rogue</mat-option>
+    <mat-option value="sorcerer">Sorcerer</mat-option>
+    <mat-option value="warlock">Warlock</mat-option>
+    <mat-option value="wizard">Wizard</mat-option>
+    <!-- CHECK IF LEGAL -->
+    <!-- <mat-option value="Artificer">Artificer</mat-option>
+  <mat-option value="Blood hunter">Blood hunter</mat-option> -->
+  </mat-select>
+</mat-form-field>
