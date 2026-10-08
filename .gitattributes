@@ -1,0 +1,19 @@
+# Normalise text files to LF in the repository and check them out using
+# the platform's native convention. This overrides core.autocrlf, so the
+# result no longer depends on each developer's git configuration.
+* text=auto
+
+# Binary assets must never be converted, or they are corrupted. Let git
+# auto-detect the rest.
+*.png binary
+*.ico binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
+*.eot binary
+*.pdf binary
+*.zip binary
