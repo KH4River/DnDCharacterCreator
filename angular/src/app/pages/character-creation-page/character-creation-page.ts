@@ -29,11 +29,10 @@ export class CharacterCreationPage {
     },
     creationRules: {
       levelingType: 'xp',
-      hpType: 'average',
-      ignoreCoinWeight: true,
+      // 2024 has no averaged HP: fixed species die + CON, or roll per level
+      // after 1st.
+      hpType: 'fixed',
       obeyMulticlassRequirements: false,
-      ruleYear: '2014',
-      characterPrivacy: 'private',
     },
   };
 
