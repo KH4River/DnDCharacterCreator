@@ -39,7 +39,14 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
+                  // The app's own code is ~7 kB. The rest is Angular
+                  // (~265 kB) plus Angular Material + CDK (~325 kB), all of
+                  // it in use: MatTabs on the creation wizard, MatSelect on
+                  // the class selector, MatFormField/MatInput on the summary.
+                  // Run `npx ng build --stats-json && node
+                  // ../tools/analyze-bundle.mjs` from this folder before
+                  // assuming something is bloating it.
+                  "maximumWarning": "700kB",
                   "maximumError": "1MB"
                 },
                 {
