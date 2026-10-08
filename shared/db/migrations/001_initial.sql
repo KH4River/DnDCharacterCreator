@@ -1115,9 +1115,15 @@ CREATE TABLE character_item (
   PRIMARY KEY (character_id, item_id)
 ) STRICT;
 
--- Post-20 progression is XP-gated, not level-gated: in the 2024 rules an
--- additional Epic Boon is earned every 30,000 XP past level 20. No class
--- level ever exceeds 20, so no class_* table above needed widening.
+-- Post-20 progression. What is settled is that class levels stop at 20,
+-- which is why no class_* table above needed widening, and that epic
+-- boons are available from 19.
+--
+-- HOW progression continues past 20 is contested; sources disagree on
+-- whether class progression continues or only feat picks do. The 30,000
+-- XP figure that circulates is the optional 2014 DMG "Bonus Feats at
+-- Level 20" rule, not 2024 core. threshold_xp stores whatever ruling
+-- the table uses rather than assuming one.
 CREATE TABLE character_epic_boon (
   character_id INTEGER NOT NULL REFERENCES player_character (id) ON DELETE CASCADE,
   feat_id      INTEGER NOT NULL REFERENCES feat (id) ON DELETE RESTRICT,
