@@ -8,6 +8,7 @@
     "electron": "concurrently --kill-others \"cd angular && ng serve\" \"electron .\"",
     "serve": "cd angular && ng serve",
     "build": "cd angular && ng build",
+    "generate:migrations": "node tools/generate-migrations.mjs",
     "watch": "cd angular && ng build --watch --configuration development",
     "test": "cd angular && ng test"
   },

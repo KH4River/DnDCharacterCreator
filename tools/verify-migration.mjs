@@ -3,6 +3,8 @@
 import { DatabaseSync } from 'node:sqlite';
 import { readFileSync } from 'node:fs';
 
+import { readMigrationSources, sourceDigest } from './lib/migration-source.mjs';
+
 const sql = readFileSync(new URL('../shared/db/migrations/001_initial.sql', import.meta.url), 'utf8');
 const db = new DatabaseSync(':memory:');
 db.exec('PRAGMA foreign_keys = ON');
@@ -26,6 +28,33 @@ const tables = db
   .prepare("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' ORDER BY name")
   .all();
 ok(`${tables.length} tables created`);
+
+// ---- Generated migrations must stay in sync with the .sql source of truth ----
+// The app cannot import .sql directly (the Angular builder's `.sql` loader
+// disables Node builtin resolution in the spec build), so
+// shared/db/migrations.generated.ts is generated from shared/db/migrations/*.sql.
+// If someone edits a migration without regenerating, the app would run stale SQL
+// while this harness runs the fresh file -- exactly the drift this repo forbids.
+const sources = readMigrationSources();
+const generated = readFileSync(new URL('../shared/db/migrations.generated.ts', import.meta.url), 'utf8');
+const hashLine = /^\/\/ source-hash: ([0-9a-f]{64})$/m.exec(generated);
+if (!hashLine) {
+  fail('migrations.generated.ts has no source-hash header');
+} else if (hashLine[1] !== sourceDigest(sources)) {
+  fail('migrations.generated.ts is stale; run `node tools/generate-migrations.mjs`');
+} else {
+  ok('migrations.generated.ts matches shared/db/migrations/*.sql');
+}
+
+// The runtime runner treats user_version as the applied COUNT, so each file's
+// trailing PRAGMA user_version must equal its ordinal (001 -> 1). If that ever
+// breaks, the runner would skip or replay migrations.
+for (const [i, { name, sql }] of sources.entries()) {
+  const m = /PRAGMA\s+user_version\s*=\s*(\d+)\s*;?\s*$/.exec(sql.trim());
+  if (!m) fail(`${name} does not end with PRAGMA user_version = N`);
+  else if (Number(m[1]) !== i + 1) fail(`${name} sets user_version ${m[1]}, expected ${i + 1}`);
+  else ok(`${name} sets user_version ${i + 1} (matches its ordinal)`);
+}
 
 // Every FK must resolve to a real table and column. SQLite resolves FKs
 // lazily at DML time, so a typo'd target would not surface on CREATE.
