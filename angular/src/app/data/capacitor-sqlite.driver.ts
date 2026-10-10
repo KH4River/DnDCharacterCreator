@@ -34,12 +34,17 @@ export class CapacitorSqliteDriver implements DatabasePort {
         : await this.sqlite.createConnection(DATABASE, false, 'no-encryption', 1, READ_ONLY);
 
     await this.connection.open();
-    // Per connection. SQLite ignores every FOREIGN KEY without it.
-    await this.connection.execute('PRAGMA foreign_keys = ON');
+    // Per connection. SQLite ignores every FOREIGN KEY without it. Pass
+    // transaction=false because the plugin wraps execute() in its own
+    // transaction by default, and the pragma is a NO-OP inside one.
+    await this.connection.execute('PRAGMA foreign_keys = ON', false);
   }
 
   async exec(sql: string): Promise<void> {
-    await this.requireConnection().execute(sql);
+    // transaction=false: the migration runner issues its own BEGIN/COMMIT
+    // around each migration, and the plugin's implicit transaction around
+    // execute() would collide with it.
+    await this.requireConnection().execute(sql, false);
   }
 
   async run(sql: string, params: readonly unknown[] = []): Promise<void> {
