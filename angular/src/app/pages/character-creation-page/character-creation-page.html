@@ -9,6 +9,7 @@
         [rules]="character().creationRules"
         (ruleUpdated)="updateInfo('creationRules', $event)"
       />
+      <app-character-creator-abilities />
     </mat-tab>
     <mat-tab label="2. Class & Levels">
       <app-character-creator-class-selector />

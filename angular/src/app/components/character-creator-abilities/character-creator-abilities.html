@@ -1,0 +1,13 @@
+@if (error()) {
+  <p class="error">Could not read the database: {{ error() }}</p>
+} @else {
+  <p class="caption">Abilities (read from the database)</p>
+  <ul class="abilities">
+    @for (ability of abilities(); track ability.id) {
+      <li>
+        {{ ability.name }}
+        <span class="code">{{ ability.code }}</span>
+      </li>
+    }
+  </ul>
+}

@@ -4,6 +4,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { CharacterCreatorRules } from '@/components/character-creator-rules/character-creator-rules';
 import { CharacterCreatorSummary } from '@/components/character-creator-summary/character-creator-summary';
 import { CharacterCreatorClassSelector } from '@/components/character-creator-class-selector/character-creator-class-selector';
+import { CharacterCreatorAbilities } from '@/components/character-creator-abilities/character-creator-abilities';
 import { Character } from '@/models/Character';
 import { MatAnchor } from "@angular/material/button";
 
@@ -14,6 +15,7 @@ import { MatAnchor } from "@angular/material/button";
     CharacterCreatorRules,
     CharacterCreatorSummary,
     CharacterCreatorClassSelector,
+    CharacterCreatorAbilities,
     MatAnchor
 ],
   templateUrl: './character-creation-page.html',
