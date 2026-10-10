@@ -2,10 +2,11 @@
   "name": "dnd-character-creator",
   "version": "0.0.0",
   "private": true,
-  "main": "electron/app.ts",
+  "main": "electron/build/app.js",
   "scripts": {
     "ng": "ng",
-    "electron": "concurrently --kill-others \"cd angular && ng serve\" \"electron .\"",
+    "electron": "npm run build:electron && concurrently --kill-others \"cd angular && ng serve\" \"electron .\"",
+    "build:electron": "tsc -p electron/tsconfig.json",
     "serve": "cd angular && ng serve",
     "build": "cd angular && ng build",
     "generate:migrations": "node tools/generate-migrations.mjs",

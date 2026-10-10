@@ -4,6 +4,7 @@
 dist/
 /tmp
 /out-tsc
+electron/build/
 /bazel-out
 
 # Node

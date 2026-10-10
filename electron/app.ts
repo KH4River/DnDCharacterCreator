@@ -1,7 +1,18 @@
 import { app, BrowserWindow } from 'electron';
+import { join } from 'node:path';
+
+import { GameDatabase } from './database';
+import { registerDatabaseIpc } from './ipc';
 
 const createWindow = () => {
-  const win = new BrowserWindow({ show: false });
+  const win = new BrowserWindow({
+    show: false,
+    webPreferences: {
+      preload: join(app.getAppPath(), 'electron', 'build', 'preload.js'),
+      contextIsolation: true,
+      nodeIntegration: false,
+    },
+  });
 
   // start window maximized
   win.maximize();
@@ -22,6 +33,11 @@ const createWindow = () => {
 };
 
 app.whenReady().then(() => {
+  // On desktop the database lives in the main process. The renderer runs the
+  // migrations and queries through IPC, so no schema knowledge lives here.
+  const db = new GameDatabase(join(app.getPath('userData'), 'dnd.db'));
+  registerDatabaseIpc(db);
+
   createWindow();
 
   // macOS apps generally continue running even without any windows open, so this
