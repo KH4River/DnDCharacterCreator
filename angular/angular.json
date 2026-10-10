@@ -39,14 +39,18 @@
               "budgets": [
                 {
                   "type": "initial",
-                  // The app's own code is ~7 kB. The rest is Angular
+                  // The app's own code is small. The rest is Angular
                   // (~265 kB) plus Angular Material + CDK (~325 kB), all of
                   // it in use: MatTabs on the creation wizard, MatSelect on
                   // the class selector, MatFormField/MatInput on the summary.
+                  // The last ~45 kB is the 001_initial.sql text, inlined by
+                  // the generated migrations module because the app must run
+                  // the migration at startup. Note the SQLite engine itself is
+                  // NOT here: both drivers are lazily loaded.
                   // Run `npx ng build --stats-json && node
                   // ../tools/analyze-bundle.mjs` from this folder before
                   // assuming something is bloating it.
-                  "maximumWarning": "700kB",
+                  "maximumWarning": "800kB",
                   "maximumError": "1MB"
                 },
                 {
