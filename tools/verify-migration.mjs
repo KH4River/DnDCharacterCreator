@@ -90,8 +90,46 @@ const expectFail = (label, fn) => {
   }
 };
 
-ins(`INSERT INTO source (slug, name, version) VALUES ('srd', 'SRD', '5.2')`);
+// ---- Source licence provenance ----
+// Claiming CC-BY without the credit it demands is the one bad state, and the
+// CHECK is the only thing standing between a pack and that state. These rows
+// are deleted before the fixture is read, because the SELECT at the top of
+// the behavioural section takes the first source row with no WHERE clause.
+
+expectFail('a licence claim without attribution is rejected', () =>
+  ins(`INSERT INTO source (slug, name, version, license)
+       VALUES ('no-credit', 'No Credit', '1.0', 'CC-BY-4.0')`));
+
+// An empty string is not NULL, so it would satisfy a bare IS NOT NULL test
+// while crediting nobody.
+expectFail('a licence claim with empty attribution is rejected', () =>
+  ins(`INSERT INTO source (slug, name, version, license, attribution)
+       VALUES ('blank-credit', 'Blank Credit', '1.0', 'CC-BY-4.0', '')`));
+
+ins(`INSERT INTO source (slug, name, version) VALUES ('homebrew', 'Homebrew', '1.0')`);
+ok('original content needs no licence or attribution');
+
+ins(`INSERT INTO source (slug, name, version, attribution)
+     VALUES ('credited', 'Credited', '1.0', 'written by me')`);
+ok('attribution without a licence is accepted');
+
+ins(`DELETE FROM source WHERE slug IN ('homebrew', 'credited')`);
+
+ins(
+  `INSERT INTO source (slug, name, version, license, attribution)
+   VALUES ('srd-5.2.1', 'SRD', '5.2.1', 'CC-BY-4.0',
+           'D&D System Reference Document 5.2.1, (c) Wizards of the Coast, CC-BY-4.0')`,
+);
 const src = q('SELECT id FROM source').id;
+
+// The fixture must survive the round trip, since the rest of the harness
+// assumes the pack it belongs to carries its credit.
+const srdRow = q(`SELECT license, attribution FROM source WHERE id = ?`, src);
+if (srdRow.license === 'CC-BY-4.0' && srdRow.attribution.length > 0) {
+  ok('SRD pack stores licence and attribution, and reads back');
+} else {
+  fail(`SRD pack row wrong: ${JSON.stringify(srdRow)}`);
+}
 ins(`INSERT INTO species (source_id, slug, name, size, speed) VALUES (?, 'elf', 'Elf', 'medium', 30)`, src);
 const elf = q('SELECT id FROM species WHERE slug = ?', 'elf').id;
 ins(`INSERT INTO background (source_id, slug, name) VALUES (?, 'wayfarer', 'Wayfarer')`, src);

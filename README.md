@@ -1,6 +1,6 @@
-# D&D Character Creator
+# Ember Codex
 
-This is a D&D Character Creator app built mainly with [Electron](https://electronjs.org) and [Angular](https://angular.dev).
+This is Ember Codex an app built mainly with [Electron](https://electronjs.org) and [Angular](https://angular.dev).
 
 Since it is a NodeJS project, installing dependencies is straightforward as soon as you have NodeJS (and by extension NPM) on your machine: open the project folder and run `npm i`.
 

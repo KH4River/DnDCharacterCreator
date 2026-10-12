@@ -1,5 +1,5 @@
 {
-  "name": "dnd-character-creator",
+  "name": "ember-codex",
   "version": "0.0.0",
   "private": true,
   "main": "electron/build/app.js",

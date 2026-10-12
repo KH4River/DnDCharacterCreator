@@ -1,5 +1,5 @@
 -- =====================================================================
--- 001_initial.sql  -  D&D character database (SQLite)
+-- 001_initial.sql  -  Ember Codex database (SQLite)
 --
 -- RULESET: 2024 Player's Handbook ONLY (labelled "5.5e" on D&D Beyond
 -- since March 2026). No rule_year column exists anywhere: the app
@@ -38,7 +38,8 @@
 -- category names -- both are facts about the game's vocabulary, not
 -- reproduced content. All spell/class/species/background text arrives via
 -- the JSON importer, and source.name / source.version record what the
--- user licensed.
+-- user licensed, with source.license / source.attribution carrying the
+-- credit a third-party licence like CC-BY-4.0 requires.
 -- =====================================================================
 
 
@@ -48,10 +49,27 @@
 
 CREATE TABLE source (
   id          INTEGER PRIMARY KEY,
-  slug        TEXT    NOT NULL UNIQUE,              -- 'srd-5.2', 'my-homebrew'
+  slug        TEXT    NOT NULL UNIQUE,              -- 'srd-5.2.1', 'my-homebrew'
   name        TEXT    NOT NULL,
   version     TEXT    NOT NULL,
-  imported_at TEXT    NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%SZ', 'now'))
+  -- Licence and attribution for reproduced third-party content. A NULL
+  -- licence means original content the user owns -- which is what their own
+  -- homebrew is -- and needs no external credit. The SRD is CC-BY-4.0, which
+  -- requires crediting Wizards of the Coast.
+  --
+  -- This is provenance, not enforcement. A user types their own claim into
+  -- their own JSON and nothing verifies it. What it buys: the app can
+  -- attribute SRD content correctly, and a pack can be named at the point
+  -- of deletion.
+  license     TEXT,
+  attribution TEXT,          -- required whenever license is set
+  imported_at TEXT    NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%SZ', 'now')),
+  -- Claiming a licence without crediting it is the one bad state. The
+  -- length() test is not redundant with IS NOT NULL: '' is not NULL, so an
+  -- importer writing an empty string would otherwise satisfy this while
+  -- crediting nobody.
+  CHECK (license IS NULL OR attribution IS NOT NULL),
+  CHECK (attribution IS NULL OR length(attribution) > 0)
 ) STRICT;
 
 
