@@ -5,7 +5,7 @@ import type { CapacitorConfig } from '@capacitor/cli';
 const config: CapacitorConfig = {
   appId: 'com.embercodex.app',
   appName: 'Ember Codex',
-  webDir: 'angular/dist/dnd-character-creator/browser',
+  webDir: 'angular/dist/ember-codex/browser',
 };
 
 export default config;

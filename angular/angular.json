@@ -7,7 +7,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "dnd-character-creator": {
+    "ember-codex": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -73,10 +73,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "dnd-character-creator:build:production"
+              "buildTarget": "ember-codex:build:production"
             },
             "development": {
-              "buildTarget": "dnd-character-creator:build:development"
+              "buildTarget": "ember-codex:build:development"
             }
           },
           "defaultConfiguration": "development"

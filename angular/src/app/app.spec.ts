@@ -23,7 +23,7 @@ describe('App', () => {
     const compiled = fixture.nativeElement as HTMLElement;
 
     // The stock generated spec asserted an <h1> containing
-    // 'Hello, dnd-character-creator'. That heading has never existed here --
+    // 'Hello, ember-codex'. That heading has never existed here --
     // app.html is just <app-navbar /> and <router-outlet />. Assert what the
     // component actually renders.
     expect(compiled.querySelector('app-navbar')).toBeTruthy();

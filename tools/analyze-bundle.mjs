@@ -4,12 +4,12 @@
 //   node tools/analyze-bundle.mjs
 //
 // Reads the esbuild metafile Angular writes to
-// angular/dist/dnd-character-creator/stats.json and attributes each file's
+// angular/dist/ember-codex/stats.json and attributes each file's
 // minified bytesInOutput to the package that owns it. Material and CDK are
 // broken down further by submodule, since they are the usual suspects.
 import { readFileSync } from 'node:fs';
 
-const STATS = new URL('../angular/dist/dnd-character-creator/stats.json', import.meta.url);
+const STATS = new URL('../angular/dist/ember-codex/stats.json', import.meta.url);
 const stats = JSON.parse(readFileSync(STATS, 'utf8'));
 
 function bytes(n) {
