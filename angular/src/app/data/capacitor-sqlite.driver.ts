@@ -7,11 +7,13 @@ const DATABASE = 'dnd';
 const READ_ONLY = false;
 
 /**
- * Mobile and web adapter: the Capacitor SQLite plugin. Native platforms run
- * device SQLite; the web build runs jeep-sqlite (sql.js over IndexedDB).
+ * Mobile adapter: the Capacitor SQLite plugin over native SQLite.
  *
- * open() is idempotent. The service imports this module lazily so neither the
- * plugin nor its web dependency reaches the initial bundle.
+ * Native only. The browser is not a target, so there is no web engine to fall
+ * back to and open() refuses there rather than failing obscurely.
+ *
+ * open() is idempotent. The service imports this module lazily so the plugin
+ * stays out of the initial bundle.
  */
 export class CapacitorSqliteDriver implements DatabasePort {
   private readonly sqlite = new SQLiteConnection(CapacitorSQLite);
@@ -22,8 +24,10 @@ export class CapacitorSqliteDriver implements DatabasePort {
       return;
     }
 
-    if (Capacitor.getPlatform() === 'web') {
-      await this.initWebStore();
+    if (!Capacitor.isNativePlatform()) {
+      throw new Error(
+        'The database needs a native shell. Run the app through Electron or on a device; the browser is not a target.',
+      );
     }
 
     const consistent = (await this.sqlite.checkConnectionsConsistency()).result ?? false;
@@ -67,21 +71,6 @@ export class CapacitorSqliteDriver implements DatabasePort {
     }
     await this.sqlite.closeConnection(DATABASE, READ_ONLY);
     this.connection = undefined;
-  }
-
-  /**
-   * The web build needs the jeep-sqlite custom element registered before the
-   * plugin can open a connection, plus an explicit store so the database
-   * survives a page reload.
-   */
-  private async initWebStore(): Promise<void> {
-    const { defineCustomElements } = await import('jeep-sqlite/loader');
-    defineCustomElements(window);
-    if (!document.querySelector('jeep-sqlite')) {
-      document.body.appendChild(document.createElement('jeep-sqlite'));
-    }
-    await customElements.whenDefined('jeep-sqlite');
-    await this.sqlite.initWebStore();
   }
 
   private requireConnection(): SQLiteDBConnection {
