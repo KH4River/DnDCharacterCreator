@@ -14,8 +14,8 @@ Node 22 or later is required, because `node:sqlite` has no earlier implementatio
 |---|---|
 | Desktop shell | Electron |
 | UI | Angular, using standalone components and signals |
-| Mobile and web shell | Capacitor |
-| Database | SQLite, via `node:sqlite` on desktop and the Capacitor SQLite plugin elsewhere |
+| Mobile shell | Capacitor |
+| Database | SQLite, via `node:sqlite` on desktop and the Capacitor SQLite plugin on mobile |
 | Tests | Vitest |
 
 Exact versions are pinned in `package.json` and `package-lock.json`.
@@ -26,7 +26,7 @@ From then on, starting the project using Electron will require running `npm run 
 
 **The compile step that runs first is not optional.** `electron/build/` is gitignored, so on a fresh clone it does not exist and `package.json` points `main` into it, which means a clone that skips the build exits with a module-not-found error on `app.js`.
 
-It is recommended to just run `npm run serve` or `ng serve` (in case the Angular CLI is installed globally on your machine) to work directly in the Angular application, in which case http://localhost:4200 is all you need. Running the two in separate terminals is also worth considering, because `npm run electron` uses `--kill-others` and a crash in one process takes down the other, and a stale `ng serve` already holding port 4200 will make a second one fail to bind.
+It is recommended to just run `npm run serve` or `ng serve` (in case the Angular CLI is installed globally on your machine) to work directly in the Angular application, in which case http://localhost:4200 is all you need for the interface. There is no database in a browser, so anything that touches SQLite has to be checked through Electron or on a device. Running the two in separate terminals is also worth considering, because `npm run electron` uses `--kill-others` and a crash in one process takes down the other, and a stale `ng serve` already holding port 4200 will make a second one fail to bind.
 
 | Script | What it does |
 |---|---|
@@ -76,7 +76,7 @@ Migrations cannot be imported directly: Node cannot import a `.sql` file, and th
 
 **Run `npm run generate:migrations` after editing any `.sql` file.** The verification harness fails loudly if you forget, because otherwise the application runs stale SQL while the harness tests the fresh file.
 
-The application reaches SQLite through a single `DatabasePort` interface with two adapters, one talking to `node:sqlite` over Electron IPC on the desktop and one using the Capacitor SQLite plugin on mobile and the web. Business SQL lives in `shared/db/repositories/` and never inside an adapter, which is what lets the same statements execute on every platform.
+The application reaches SQLite through a single `DatabasePort` interface with two adapters, one talking to `node:sqlite` over Electron IPC on the desktop and one using the Capacitor SQLite plugin on mobile. Business SQL lives in `shared/db/repositories/` and never inside an adapter, which is what lets the same statements execute on every platform.
 
 ## Content and licensing
 
@@ -93,4 +93,4 @@ This is not legal advice, and the licensing position should be reviewed by a law
 | Content packs | Importing character-creation content as JSON, each pack declaring its own licence and attribution |
 | Characters | Creating and saving characters, and listing the ones held on the device |
 | Distribution | Packaged desktop builds, which the development workflow does not produce yet |
-| Mobile | Native shells for Android and iOS, alongside the browser build that already runs |
+| Mobile | Native shells for Android and iOS |
